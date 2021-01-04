@@ -15,8 +15,27 @@ class PostList extends React.Component {
 export default connect(null, { fetchPosts: fetchPosts })(PostList); // 1
 
 /*
+**General Data Loading with Redux
+=============
+V252
+=============
+1. Component gets rendered onto the screen
+2. Components 'componentDidMount' lifecycle method gets called
+3. We call action creator from 'componentDidMount'
+=============
+V253
+=============
+4. Action creator runs code to make an API request
+5. API responds with data
+6. Action creator returns an 'action' with the fetched data on the 'payload' property
+7. Some reducer sees the action, returns the data off the 'payload'
+8. Because we generated some new state object, redux/react-redux causes our React app to be rerendered. 
+
+
+
 //1
 ES2015 refactor 
 export default connect(null, { fetchPosts })(PostList); // 1
+
 
 */
