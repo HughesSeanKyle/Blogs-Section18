@@ -1,7 +1,6 @@
 import jsonPlaceholder from '../apis/jsonPlaceholder'; 
 
-export const fetchPosts = async () => {
-    // Bad approach! Will get error // 1
+export const fetchPosts = async () => {// 1
     const response = await jsonPlaceholder.get('/posts');
 
     return {
@@ -17,5 +16,10 @@ First error
 
 Second error
 - Use custom middleware for async actions
+ 
+What is wrong with 'fetchPosts'?
+Action creators must return plain JS objects with a type property - we are not!
+
+By the time our action gets to a reducer, we won't have fetched our data. 
 */
 
