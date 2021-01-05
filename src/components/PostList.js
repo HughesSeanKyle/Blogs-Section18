@@ -23,11 +23,14 @@ V252
 2. Components 'componentDidMount' lifecycle method gets called
 3. We call action creator from 'componentDidMount'
 =============
-V253
+V253 - V258
 =============
 4. Action creator runs code to make an API request
 5. API responds with data
 6. Action creator returns an 'action' with the fetched data on the 'payload' property
+=============
+
+=============
 7. Some reducer sees the action, returns the data off the 'payload'
 8. Because we generated some new state object, redux/react-redux causes our React app to be rerendered. 
 
