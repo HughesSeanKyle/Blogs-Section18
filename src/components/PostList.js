@@ -29,7 +29,7 @@ V253 - V258
 5. API responds with data
 6. Action creator returns an 'action' with the fetched data on the 'payload' property
 =============
-
+V259 - 
 =============
 7. Some reducer sees the action, returns the data off the 'payload'
 8. Because we generated some new state object, redux/react-redux causes our React app to be rerendered. 
