@@ -9,11 +9,9 @@ class UserHeader extends React.Component {
 
     
     render() {
-        const user = this.props.users.find((user) => {
-            return user.id === this.props.userId;
-        });
+        const { user } = this.props;
 
-        // If NO user
+        // If NO user 
         if (!user) {
             return null;
         }
@@ -23,12 +21,16 @@ class UserHeader extends React.Component {
 };
 
 // Give component access to redux level state
-const mapStateToProps = (state) => {
-    return { users: state.users };
+const mapStateToProps = (state, ownProps) => { // 1
+    // Finds the appropriate USER
+    return { user: state.users.find(user => user.id === ownProps.userId) };
 };
 
 export default connect(mapStateToProps, { fetchUser })(UserHeader);
 
 /*
 The connect() function connects a React component to a Redux store. It provides its connected component with the pieces of the data it needs from the store, and the functions it can use to dispatch actions to the store.
+
+// 1
+ownProps is a reference to the props that is about to be sent into the userHeader
 */
