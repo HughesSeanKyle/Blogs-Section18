@@ -7,16 +7,11 @@ export const fetchPosts = () => async dispatch => { // 1.1
     dispatch({ type: 'FETCH_POSTS', payload: response.data } )
 };
 
-export const fetchUser = id => dispatch => {
-    _fetchUser(id, dispatch);
-};
-
-// _ indicates that this is a pvt function                          //2
-const _fetchUser = _.memoize(async(id, dispatch) => {               //2.1
+export const fetchUser = id => async dispatch => {
     const response = await jsonPlaceholder.get(`/users/${id}`);
 
     dispatch({ type: 'FETCH_USER', payload: response.data })
-});
+};
 
 /*
 // 1
@@ -37,7 +32,19 @@ With redux thunk we can manually dispatch a function at some point in time.
 // 1.1
 Above fix implemented and refactor.
 
-//2
+//2 - The first Solution to the problem
+
+export const fetchUser = id => dispatch => {
+    _fetchUser(id, dispatch);
+};
+
+// _ indicates that this is a pvt function                          //2
+const _fetchUser = _.memoize(async(id, dispatch) => {               //2.1
+    const response = await jsonPlaceholder.get(`/users/${id}`);
+
+    dispatch({ type: 'FETCH_USER', payload: response.data })
+});
+
 Side-effect of solution - If you ever wanted to 'Refetch' as user you would not be able to do it again using the same action creator (_fetchUser). Can only fetch each user exactly one time. To get user again another action creator with the same logic must be made without the memoization step.  
 
 // 2.1
