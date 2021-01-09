@@ -1,10 +1,13 @@
 import _ from 'lodash';
 import jsonPlaceholder from '../apis/jsonPlaceholder'; 
 
-export const fetchPostsAndUsers = () => async dispatch => {
-    console.log('About to fetch posts');
-    await dispatch(fetchPosts());    
-    console.log('fetched posts!')
+export const fetchPostsAndUsers = () => async (dispatch, getState) => {
+    await dispatch(fetchPosts());
+        
+    // Using lodash version of map function
+    // Will return an array of all the user id's (get unique user id's)
+    const userIds = _.uniq(_.map(getState().posts, 'userId'));
+    userIds.forEach(id => dispatch(fetchUser(id))); // 3
 };
 
 export const fetchPosts = () => async dispatch => { // 1.1
@@ -55,5 +58,8 @@ Side-effect of solution - If you ever wanted to 'Refetch' as user you would not 
 
 // 2.1
 Async moved to here because the private function contains await.
+
+// 3
+Async await syntax does not work with a forEach statement 
 */
 
