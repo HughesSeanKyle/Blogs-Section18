@@ -3,11 +3,15 @@ import jsonPlaceholder from '../apis/jsonPlaceholder';
 
 export const fetchPostsAndUsers = () => async (dispatch, getState) => {
     await dispatch(fetchPosts());
-        
+     
+    // 3
     // Using lodash version of map function
     // Will return an array of all the user id's (get unique user id's)
-    const userIds = _.uniq(_.map(getState().posts, 'userId'));
-    userIds.forEach(id => dispatch(fetchUser(id))); // 3
+    _.chain(getState().posts)                       // 3.1.1
+        .map('userId')                              // 3.1.2
+        .uniq()                                     // 3.1.3
+        .forEach(id => dispatch(fetchUser(id)))     // 3.1.4
+        .value()                                    // 3.1.5
 };
 
 export const fetchPosts = () => async dispatch => { // 1.1
@@ -59,7 +63,19 @@ Side-effect of solution - If you ever wanted to 'Refetch' as user you would not 
 // 2.1
 Async moved to here because the private function contains await.
 
-// 3
+// 3.1
+
+// 3.1.1 - Initiate chain and get all post from state
+// 3.1.2 - map over posts  
+// 3.1.3 - find the unique values in the userId mapped array
+// 3.1.4 - Run dispatch function on each unique id with forEach
+// 3.1.5 - value will execute the chain
+
+
+// 3.2
+const userIds = _.uniq(_.map(getState().posts, 'userId'));
+    userIds.forEach(id => dispatch(fetchUser(id))); // 3.1
+
 Async await syntax does not work with a forEach statement 
 */
 
